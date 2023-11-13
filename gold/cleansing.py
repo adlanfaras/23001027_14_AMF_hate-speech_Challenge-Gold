@@ -6,7 +6,7 @@ from db import db_connect, db_insert_csv
 conn = db_connect()
 db_insert_csv(conn)
 
-#Import of kata dataframe abusive dan ubah jadi list
+#Import dataframe abusive dan ubah jadi list
 data_abusive = pd.read_sql('Select abusive_words from abusive', conn)
 abusive_list = data_abusive.values.flatten()
 

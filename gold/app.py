@@ -50,16 +50,16 @@ def home():
 #form cleaning api
 @swag_from('docs/cleansing_form.yml', methods=['POST'])
 @app.route('/cleansing_form', methods=['POST'])
-def cleansing_form():
+def cleansing_form_api():
 
-    # Get text from input user
+    # Input text dari user
     raw_text = request.form["raw_text"]
 
     # Text cleansing
     clean_text = text_cleansing(raw_text)
     result_response = {"raw_text": raw_text, "clean_text": clean_text}
 
-    # Insert result to database
+    # Insert result ke database
     db_connection = db_connect()
     db_insert_cleaned_form(db_connection, raw_text, clean_text)
     return jsonify(result_response)
@@ -67,15 +67,15 @@ def cleansing_form():
 #csv cleaning api
 @swag_from('docs/cleansing_csv.yml', methods=['POST'])
 @app.route('/cleansing_csv', methods=['POST'])
-def cleansing_csv():
+def cleansing_csv_api():
 
-    # Get file from user upload
-    uploaded_file = request.files['upload_file']
+    # Input csv dari user
+    uploaded_csv = request.files['upload_csv']
 
     # CSV cleansing
-    df_cleansing = file_cleansing(uploaded_file)
+    df_cleansing = file_cleansing(uploaded_csv)
 
-    # Insert result to database
+    # Insert result ke database
     db_connection = db_connect()
     db_insert_cleaned_csv(db_connection, df_cleansing)
     print("Upload result to database success!")
