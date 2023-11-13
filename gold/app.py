@@ -56,13 +56,13 @@ def cleansing_form_api():
     raw_text = request.form["raw_text"]
 
     # Text cleansing
-    clean_text = text_cleansing(raw_text)
-    result_response = {"raw_text": raw_text, "clean_text": clean_text}
+    cleaned_text = text_cleansing(raw_text)
+    result = {"raw_text": raw_text, "clean_text": cleaned_text}
 
     # Insert result ke database
     db_connection = db_connect()
-    db_insert_cleaned_form(db_connection, raw_text, clean_text)
-    return jsonify(result_response)
+    db_insert_cleaned_form(db_connection, raw_text, cleaned_text)
+    return jsonify(result)
 
 #csv cleaning api
 @swag_from('docs/cleansing_csv.yml', methods=['POST'])
@@ -73,21 +73,21 @@ def cleansing_csv_api():
     uploaded_csv = request.files['upload_csv']
 
     # CSV cleansing
-    df_cleansing = file_cleansing(uploaded_csv)
+    df_cleaned = file_cleansing(uploaded_csv)
 
     # Insert result ke database
     db_connection = db_connect()
-    db_insert_cleaned_csv(db_connection, df_cleansing)
+    db_insert_cleaned_csv(db_connection, df_cleaned)
     print("Upload result to database success!")
-    result_response = df_cleansing.T.to_dict()
-    return jsonify(result_response)
+    result = df_cleaned.T.to_dict()
+    return jsonify(result)
 
 @swag_from('docs/show_cleansing_result.yml', methods=['GET'])
 @app.route('/show_cleansing_result', methods=['GET'])
 def show_cleansing_result_api():
     db_connection = db_connect()
-    cleansing_result = show_cleansing_result(db_connection)
-    return jsonify(cleansing_result)
+    cleaned_result = show_cleansing_result(db_connection)
+    return jsonify(cleaned_result)
 
 
 if __name__ == '__main__':

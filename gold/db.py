@@ -3,7 +3,7 @@ import sqlite3
 
 # Sambung ke database
 def db_connect():
-    conn = sqlite3.connect('raw_data.db')
+    conn = sqlite3.connect('database.db')
     return conn
 
 def db_insert_csv(conn):
@@ -17,14 +17,14 @@ def db_insert_csv(conn):
     df_alay.to_sql('alay', conn, if_exists='replace', index=False)
     
 
-def db_insert_cleaned_form(conn, raw_text, clean_text):
+def db_insert_cleaned_form(conn, raw_text, cleaned_text):
     # Simpan result ke database
-    df = pd.DataFrame({'raw_text': [raw_text], 'clean_text': [clean_text]})
+    df = pd.DataFrame({'raw_text': [raw_text], 'clean_text': [cleaned_text]})
     df.to_sql('cleansing_result', conn, if_exists='append', index=False)
     
-def db_insert_cleaned_csv(conn, clean_df):
+def db_insert_cleaned_csv(conn, cleaned_df):
     # Simpan result ke database
-    clean_df.to_sql('cleansing_result', conn, if_exists='append', index=False)  
+    cleaned_df.to_sql('cleansing_result', conn, if_exists='append', index=False)  
   
 def show_cleansing_result(conn):
     # Menunjukkan cleansing result

@@ -3,7 +3,7 @@ tags:
 paths:
   /show_cleansing_result:
 get:
-  description: get API Information
+  description: get API result
 responses:
     '200':
       description: Successful response
