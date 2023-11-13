@@ -19,12 +19,12 @@ def db_insert_csv(conn):
 
 def db_insert_cleaned_form(conn, raw_text, clean_text):
 
-    # Insert result to database
+    # Insert result ke database
     df = pd.DataFrame({'raw_text': [raw_text], 'clean_text': [clean_text]})
     df.to_sql('cleansing_result', conn, if_exists='append', index=False)
     
 def db_insert_cleaned_csv(conn, clean_df):
-    # Insert result to database
+    # Insert result ke database
     clean_df.to_sql('cleansing_result', conn, if_exists='append', index=False)  
   
 def show_cleansing_result(conn):

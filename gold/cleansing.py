@@ -3,6 +3,7 @@ import pandas as pd
 import sqlite3
 from db import db_connect, db_insert_csv
 
+# Sambung ke database
 conn = db_connect()
 db_insert_csv(conn)
 
